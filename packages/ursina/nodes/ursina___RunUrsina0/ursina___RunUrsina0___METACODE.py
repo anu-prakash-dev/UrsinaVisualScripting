@@ -24,7 +24,6 @@ from NIENV import *
 
 # --------------------------
 
-from ursina import *
 
 class %CLASS%(NodeInstance):
     def __init__(self, params):
@@ -35,8 +34,7 @@ class %CLASS%(NodeInstance):
 
     def update_event(self, input_called=-1):
         if input_called == 0:
-            app = Ursina()
-            self.set_output_val(1, app)
+            self.input(1).run()
         pass  # ...
 
     def get_data(self):

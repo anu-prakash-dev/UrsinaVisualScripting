@@ -26,9 +26,9 @@ from NIENV import *
 
 from ursina import *
 
-class %CLASS%(NodeInstance):
+class InitUrsina_NodeInstance(NodeInstance):
     def __init__(self, params):
-        super(%CLASS%, self).__init__(params)
+        super(InitUrsina_NodeInstance, self).__init__(params)
 
         # self.special_actions['action name'] = {'method': M(self.action_method)}
         # ...

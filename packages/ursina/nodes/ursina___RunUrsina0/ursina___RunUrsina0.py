@@ -24,19 +24,17 @@ from NIENV import *
 
 # --------------------------
 
-from ursina import *
 
-class %CLASS%(NodeInstance):
+class RunUrsina_NodeInstance(NodeInstance):
     def __init__(self, params):
-        super(%CLASS%, self).__init__(params)
+        super(RunUrsina_NodeInstance, self).__init__(params)
 
         # self.special_actions['action name'] = {'method': M(self.action_method)}
         # ...
 
     def update_event(self, input_called=-1):
         if input_called == 0:
-            app = Ursina()
-            self.set_output_val(1, app)
+            self.input(1).run()
         pass  # ...
 
     def get_data(self):
