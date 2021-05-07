@@ -40,7 +40,7 @@ class %CLASS%(NodeInstance):
             height = int(self.input(2))
             window.windowed_size = window.size = (width,height)
             app = Ursina()
-            self.set_output_val(1, app)
+            self.set_output_val(1, (app,application))
             self.exec_output(0)
         pass  # ...
 
