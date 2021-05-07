@@ -118,10 +118,18 @@ saving: ctrl+s
         #     s.flow.viewport().update()
 
         self.resize(1500, 800)
+        print("Loading Ursina ...")
         self.import_nodes_package("../packages/ursina/ursina.rpc")
+        print("Done")
+        print("Loading std ...")
         self.import_nodes_package("../packages/std/std.rpc")
+        print("Done")
+        print("Loading math ...")
         self.import_nodes_package("../packages/math/math.rpc")
+        print("Done")
+        print("Loading random ...")
         self.import_nodes_package("../packages/random/random.rpc")
+        print("Done")
 
 
     def setup_menu_actions(self):
