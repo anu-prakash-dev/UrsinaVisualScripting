@@ -34,7 +34,12 @@ class %CLASS%(NodeInstance):
 
     def update_event(self, input_called=-1):
         if input_called == 0:
-            self.input(1).run()
+            app = self.input(1)
+            try:
+                    app.run()
+            except SystemExit:
+                    application.base.destroy()
+            
         pass  # ...
 
     def get_data(self):
