@@ -118,6 +118,10 @@ saving: ctrl+s
         #     s.flow.viewport().update()
 
         self.resize(1500, 800)
+        self.import_nodes_package("../packages/ursina/ursina.rpc")
+        self.import_nodes_package("../packages/std/std.rpc")
+        self.import_nodes_package("../packages/math/math.rpc")
+        self.import_nodes_package("../packages/random/random.rpc")
 
 
     def setup_menu_actions(self):
@@ -145,7 +149,7 @@ saving: ctrl+s
         performance_mode_AG = QActionGroup(self)
         performance_mode_AG.addAction(self.action_set_performance_mode_fast)
         performance_mode_AG.addAction(self.action_set_performance_mode_pretty)
-        self.action_set_performance_mode_fast.setChecked(True)
+        self.action_set_performance_mode_pretty.setChecked(True)
         performance_mode_AG.triggered.connect(self.on_performance_mode_changed)
 
         performance_menu = QMenu('Performance Mode', self)
