@@ -120,7 +120,7 @@ class DesignContainer(QObject):
     start_flow_theme = flow_themes[-1]
     flow_theme = None  # initialized by MainWindow
     flow_theme_changed = Signal(str)
-    performance_mode = 'fast'
+    performance_mode = 'pretty'
 
     def set_flow_theme(self, new_theme: str = None):
         self.flow_theme = new_theme if new_theme is not None else self.start_flow_theme
@@ -137,7 +137,7 @@ class DesignContainer(QObject):
         self.flow_theme_changed.emit(self.flow_theme)
 
     ryven_stylesheet = None
-    node_instance_shadows_shown = False
+    node_instance_shadows_shown = True
     animations_enabled = True
 
 
