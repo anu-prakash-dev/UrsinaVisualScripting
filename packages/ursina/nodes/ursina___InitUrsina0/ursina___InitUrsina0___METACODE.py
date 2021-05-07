@@ -36,11 +36,8 @@ class %CLASS%(NodeInstance):
     def update_event(self, input_called=-1):
         if input_called == 0:
 
-            width = int(self.input(1))
-            height = int(self.input(2))
-            window.windowed_size = window.size = (width,height)
             app = Ursina()
-            self.set_output_val(1, (app,application))
+            self.set_output_val(1, app)
             self.exec_output(0)
         pass  # ...
 

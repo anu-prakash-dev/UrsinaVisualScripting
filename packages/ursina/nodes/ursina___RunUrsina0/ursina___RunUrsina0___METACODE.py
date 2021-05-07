@@ -1,3 +1,4 @@
+from ursina import *
 from NIENV import *
 
 
@@ -34,7 +35,11 @@ class %CLASS%(NodeInstance):
 
     def update_event(self, input_called=-1):
         if input_called == 0:
-            app,application = self.input(1)
+            app = self.input(1)
+            window.title = self.input(2).title
+            window.windowed_size = self.input(2).windowed_size
+            window.fullscreen = self.input(2).fullscreen
+            window.borderless = self.input(2).borderless
             try:
                     app.run()
             except SystemExit:
