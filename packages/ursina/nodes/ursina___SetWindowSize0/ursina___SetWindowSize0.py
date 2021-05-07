@@ -23,25 +23,21 @@ from NIENV import *
 # self.log_message('that\'s not good', target='error')
 
 # --------------------------
-
 from ursina import *
 
-class InitUrsina_NodeInstance(NodeInstance):
+class SetWindowSize_NodeInstance(NodeInstance):
     def __init__(self, params):
-        super(InitUrsina_NodeInstance, self).__init__(params)
+        super(SetWindowSize_NodeInstance, self).__init__(params)
 
         # self.special_actions['action name'] = {'method': M(self.action_method)}
         # ...
 
     def update_event(self, input_called=-1):
-        if input_called == 0:
-
+        if input_called == 0 :
             width = int(self.input(1))
             height = int(self.input(2))
+            print(width,height)
             window.windowed_size = window.size = (width,height)
-            app = Ursina()
-            self.set_output_val(1, app)
-            self.exec_output(0)
         pass  # ...
 
     def get_data(self):
