@@ -117,7 +117,7 @@ class DesignContainer(QObject):
                   QColor('#3f4044'))
     ]
 
-    start_flow_theme = flow_themes[-1]
+    start_flow_theme = flow_themes[2]
     flow_theme = None  # initialized by MainWindow
     flow_theme_changed = Signal(str)
     performance_mode = 'pretty'

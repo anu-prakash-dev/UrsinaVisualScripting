@@ -28,19 +28,35 @@ from NIENV import *
 class %CLASS%(NodeInstance):
     def __init__(self, params):
         super(%CLASS%, self).__init__(params)
+        self.elements = 1
+        
+        self.special_actions['Add Element'] = {'method': M(self.action_add_element)}
 
-        # self.special_actions['action name'] = {'method': M(self.action_method)}
-        # ...
 
     def update_event(self, input_called=-1):
-        self.get_vars_handler().create_new_var(self.input(1))
+        the_list = []
+        for inp in self.inputs:
+            the_list.append(inp.get_val())
+        self.set_output_val(0, tuple(the_list))
+
+    def action_add_element(self):
+        new_elem = self.elements+1
+        self.create_new_input('data', 'ELEMENT #'+str(new_elem), widget_name='std line edit m', widget_pos='besides')
+        self.elements += 1
+        
+        self.special_actions['Remove Element'] = {'method': M(self.action_remove_element)}
+
+    def action_remove_element(self):
+        self.delete_input(-1)
+        self.elements -= 1
+        
+        if self.elements == 1:
+            del self.special_actions['Remove Element']
 
     def get_data(self):
         data = {}
         return data
 
-    def set_data(self, data):
-        pass
 
-    def removing(self):
+    def remove_event(self):
         pass

@@ -24,16 +24,25 @@ from NIENV import *
 
 # --------------------------
 
-
-class CreateVar_NodeInstance(NodeInstance):
+class Color_NodeInstance(NodeInstance):
     def __init__(self, params):
-        super(CreateVar_NodeInstance, self).__init__(params)
-
+        super(Color_NodeInstance, self).__init__(params)
+        for input in self.inputs :
+            input.widget.set_data(255)
+            input.widget.editing_finished()
         # self.special_actions['action name'] = {'method': M(self.action_method)}
         # ...
 
     def update_event(self, input_called=-1):
-        self.get_vars_handler().create_new_var(self.input(1))
+
+        r = self.input(0)
+        g = self.input(1)
+        b = self.input(2)
+        a = self.input(3)
+            
+        colour = (r,g,b,a)
+            
+        self.set_output_val(0, colour)
 
     def get_data(self):
         data = {}

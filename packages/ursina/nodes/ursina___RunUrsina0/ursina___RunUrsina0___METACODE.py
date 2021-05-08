@@ -35,7 +35,7 @@ class %CLASS%(NodeInstance):
 
     def update_event(self, input_called=-1):
         if input_called == 0:
-            app = self.input(1)
+            app = self.get_var_val("app")
             try:
                     app.run()
             except SystemExit:

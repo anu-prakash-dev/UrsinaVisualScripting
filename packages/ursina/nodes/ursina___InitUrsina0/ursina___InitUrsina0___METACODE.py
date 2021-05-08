@@ -37,7 +37,9 @@ class %CLASS%(NodeInstance):
         if input_called == 0:
 
             app = Ursina()
-            self.set_output_val(1, app)
+            var_handler = self.get_vars_handler()
+            var_handler.create_new_var("app")
+            var_handler.set_var("app",app)
             self.exec_output(0)
         pass  # ...
 
