@@ -1,4 +1,4 @@
-from PySide2.QtWidgets import QWidget, QVBoxLayout, QLineEdit, QLabel, QScrollArea
+from PySide2.QtWidgets import QWidget, QVBoxLayout, QLineEdit, QLabel, QScrollArea, QCheckBox
 from PySide2.QtCore import Qt
 from PySide2.QtGui import QFont
 
@@ -40,6 +40,10 @@ class NodeChoiceWidget(QWidget):
         self.search_line_edit.textChanged.connect(self.update_view)
         self.layout().addWidget(self.search_line_edit)
 
+        self.package_search = QCheckBox("Search In Package Name", self)
+        self.package_search.setChecked(True)
+        self.package_search.stateChanged.connect(self.update_view)
+        self.layout().addWidget(self.package_search)
 
         self.list_scroll_area = QScrollArea(self)
         self.list_scroll_area.setVerticalScrollBarPolicy(Qt.ScrollBarAsNeeded)
@@ -111,7 +115,8 @@ class NodeChoiceWidget(QWidget):
         self.nodes = self.all_nodes
 
 
-    def update_view(self, text=''):
+    def update_view(self, _=""):
+        text = self.search_line_edit.text()
         text = text.lower()
         for i in reversed(range(self.list_layout.count())):
             self.list_layout.itemAt(i).widget().setParent(None)
@@ -158,8 +163,9 @@ class NodeChoiceWidget(QWidget):
             name = info[0]
             package = info[1]
             Debugger.debug(item, name, text)
-            if name.__contains__(text) or package.__contains__(text):
+            if name.__contains__(text) or (self.package_search.isChecked() and package.__contains__(text)):
                 indices_dict[item] = index
+
         return {k: v for k, v in sorted(indices_dict.items(), key=lambda i: i[1])}
 
 
