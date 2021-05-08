@@ -33,26 +33,22 @@ class SetWindowProperties_NodeInstance(NodeInstance):
         # ...
 
     def update_event(self, input_called=-1):
-
-        title = str(self.input(1))
-        width = int(self.input(2))
-        height = int(self.input(3))
-        fullscreen = bool(self.input(4))
-        borderless = bool(self.input(5))
+        if input_called == 0 :
+            app = self.input(6)
+            
+            title = str(self.input(1))
+            width = int(self.input(2))
+            height = int(self.input(3))
+            fullscreen = bool(self.input(4))
+            borderless = bool(self.input(5))
         
-        print(title)
-        print(width)
-        print(height)
-        print(borderless)
-        print(fullscreen)
+            window.windowed_size = window.size = (width,height)
+            window.title = title
+            window.fullscreen = fullscreen
+            window.borderless = borderless
         
-        window.windowed_size = window.size = (width,height)
-        window.title = title
-        window.fullscreen = fullscreen
-        window.borderless = borderless
-        
-        self.set_output_val(1, window)
-        self.exec_output(0)
+            self.set_output_val(1, app)
+            self.exec_output(0)
 
     def get_data(self):
         data = {}

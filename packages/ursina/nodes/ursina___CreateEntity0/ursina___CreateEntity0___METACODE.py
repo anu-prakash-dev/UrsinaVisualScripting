@@ -1,5 +1,5 @@
 from NIENV import *
-from ursina import *
+
 
 # API METHODS --------------
 
@@ -23,7 +23,7 @@ from ursina import *
 # self.log_message('that\'s not good', target='error')
 
 # --------------------------
-
+from ursina import *
 
 class %CLASS%(NodeInstance):
     def __init__(self, params):
@@ -33,22 +33,11 @@ class %CLASS%(NodeInstance):
         # ...
 
     def update_event(self, input_called=-1):
-        if input_called == 0 :
-            app = self.input(6)
-            
-            title = str(self.input(1))
-            width = int(self.input(2))
-            height = int(self.input(3))
-            fullscreen = bool(self.input(4))
-            borderless = bool(self.input(5))
-        
-            window.windowed_size = window.size = (width,height)
-            window.title = title
-            window.fullscreen = fullscreen
-            window.borderless = borderless
-        
-            self.set_output_val(1, app)
+        if input_called == 0:
+            entity = Entity(model=self.input(1),color=self.input(2),position=self.input(3))
+            self.set_output_val(1, entity)
             self.exec_output(0)
+        pass  # ...
 
     def get_data(self):
         data = {}
