@@ -125,7 +125,7 @@ class NodeChoiceWidget(QWidget):
         # nodes
         nodes_names_dict = {}
         for n in self.nodes:
-            nodes_names_dict[n] = n.title.lower()
+            nodes_names_dict[n] = (n.title.lower(),n.package.lower())
         sorted_indices = self.get_sorted_dict_matching_search(nodes_names_dict, text)
         for n, index in sorted_indices.items():
             self.current_nodes.append(n)
@@ -154,10 +154,11 @@ class NodeChoiceWidget(QWidget):
 
     def get_sorted_dict_matching_search(self, items_dict, text):
         indices_dict = {}
-        for item, name in items_dict.items():  # the strings are already lowered here
+        for index, (item, info) in enumerate(items_dict.items()):  # the strings are already lowered here
+            name = info[0]
+            package = info[1]
             Debugger.debug(item, name, text)
-            if name.__contains__(text):
-                index = name.index(text)
+            if name.__contains__(text) or package.__contains__(text):
                 indices_dict[item] = index
         return {k: v for k, v in sorted(indices_dict.items(), key=lambda i: i[1])}
 
