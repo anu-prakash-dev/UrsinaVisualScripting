@@ -27,11 +27,6 @@ from NIENV import *
 class Color_NodeInstance(NodeInstance):
     def __init__(self, params):
         super(Color_NodeInstance, self).__init__(params)
-        for input in self.inputs :
-            input.widget.set_data(255)
-            input.widget.editing_finished()
-        # self.special_actions['action name'] = {'method': M(self.action_method)}
-        # ...
 
     def update_event(self, input_called=-1):
 

@@ -91,6 +91,18 @@ class MainWindow(QMainWindow):
             print('loading project...')
             self.parse_project(config['content'])
             print('finished')
+            
+        if "std" not in self.package_names:
+            self.import_nodes_package("../packages/std/std.rpc")
+
+        if "math" not in self.package_names:
+            self.import_nodes_package("../packages/math/math.rpc")
+
+        if "random" not in self.package_names:
+            self.import_nodes_package("../packages/random/random.rpc")
+
+        if "ursina" not in self.package_names:
+            self.import_nodes_package("../packages/ursina/ursina.rpc")
 
         print('''
 CONTROLS
@@ -118,18 +130,6 @@ saving: ctrl+s
         #     s.flow.viewport().update()
 
         self.resize(1500, 800)
-        print("Loading Ursina ...")
-        self.import_nodes_package("../packages/ursina/ursina.rpc")
-        print("Done")
-        print("Loading std ...")
-        self.import_nodes_package("../packages/std/std.rpc")
-        print("Done")
-        print("Loading math ...")
-        self.import_nodes_package("../packages/math/math.rpc")
-        print("Done")
-        print("Loading random ...")
-        self.import_nodes_package("../packages/random/random.rpc")
-        print("Done")
 
 
     def setup_menu_actions(self):
@@ -277,6 +277,8 @@ saving: ctrl+s
             self.import_nodes_package(p)
 
     def import_nodes_package(self, file_path):
+        filename = os.path.splitext(os.path.basename(file_path))
+        print("\nLoading %s ..." % str(filename[0]))
         j_str = ''
         try:
             f = open(file_path)
@@ -287,8 +289,8 @@ saving: ctrl+s
             return
 
         # don't import a package twice if it already has been imported
-        filename = os.path.splitext(os.path.basename(file_path))
         if filename in self.package_names:
+            print("%s already loaded" % str(filename[0]))
             return
 
         # Important: translate the package first (metacore files -> src code files)
@@ -302,6 +304,7 @@ saving: ctrl+s
                             package_name=os.path.splitext(os.path.basename(file_path))[0]):
 
             self.package_names.append(filename)
+        print("Done")
 
 
 
