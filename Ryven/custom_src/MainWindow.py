@@ -22,6 +22,7 @@ from custom_src.global_tools.Debugger import Debugger
 from custom_src.GlobalAttributes import Flow_AlgorithmMode, ViewportUpdateMode
 from custom_src.Design import Design
 
+from custom_src.startup_dialog.StartupDialog import StartupDialog
 
 class MainWindow(QMainWindow):
     def __init__(self, config):
@@ -91,7 +92,7 @@ class MainWindow(QMainWindow):
             print('loading project...')
             self.parse_project(config['content'])
             print('finished')
-            
+
         if "std" not in self.package_names:
             self.import_nodes_package("../packages/std/std.rpc")
 
@@ -142,6 +143,7 @@ saving: ctrl+s
 
         self.ui.actionImport_Nodes.triggered.connect(self.on_import_nodes_triggered)
         self.ui.actionSave_Project.triggered.connect(self.on_save_project_triggered)
+        self.ui.actionLoad_Project.triggered.connect(self.on_load_project_triggered)
         self.ui.actionEnableDebugging.triggered.connect(self.on_enable_debugging_triggered)
         self.ui.actionDisableDebugging.triggered.connect(self.on_disable_debugging_triggered)
         self.ui.actionSave_Pic_Viewport.triggered.connect(self.on_save_scene_pic_viewport_triggered)
@@ -487,6 +489,26 @@ saving: ctrl+s
                                                 '../saves', 'Ryven Project(*.rpo)')[0]
         if file_name != '':
             self.save_project(file_name)
+
+    def on_load_project_triggered(self):
+        sw = StartupDialog()
+        sw.exec_()
+
+        if not sw.editor_startup_configuration == {}:
+            config = sw.editor_startup_configuration
+            if config['config'] == 'create plain new project':
+                self.try_to_create_new_script()
+            elif config['config'] == 'open project':
+                for index in range(len(self.scripts)):
+                    self.ui.scripts_tab_widget.removeTab(index)
+                    del self.scripts[index]
+                print('importing packages...')
+                self.import_packages(config['required packages'])
+                print('loading project...')
+                self.parse_project(config['content'])
+                print('finished')
+
+
 
 
     def save_project(self, file_name):
