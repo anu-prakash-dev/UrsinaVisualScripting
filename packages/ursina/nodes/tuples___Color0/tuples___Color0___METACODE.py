@@ -23,21 +23,24 @@ from NIENV import *
 # self.log_message('that\'s not good', target='error')
 
 # --------------------------
-from ursina import *
 
-class CreateEntity_NodeInstance(NodeInstance):
+class %CLASS%(NodeInstance):
     def __init__(self, params):
-        super(CreateEntity_NodeInstance, self).__init__(params)
+        super(%CLASS%, self).__init__(params)
 
         # self.special_actions['action name'] = {'method': M(self.action_method)}
         # ...
 
     def update_event(self, input_called=-1):
-        if input_called == 0:
-            entity = Entity(model=self.input(1),color=self.input(2),position=self.input(3))
-            self.set_output_val(1, entity)
-            self.exec_output(0)
-        pass  # ...
+
+        r = self.input(0)
+        g = self.input(1)
+        b = self.input(2)
+        a = self.input(3)
+            
+        colour = (r,g,b,a)
+            
+        self.set_output_val(0, colour)
 
     def get_data(self):
         data = {}

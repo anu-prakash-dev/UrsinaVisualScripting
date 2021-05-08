@@ -34,13 +34,13 @@ class %CLASS%(NodeInstance):
 
     def update_event(self, input_called=-1):
         if input_called == 0 :
-            app = self.input(6)
+            app = self.input(1)
             
-            title = str(self.input(1))
-            width = int(self.input(2))
-            height = int(self.input(3))
-            fullscreen = bool(self.input(4))
-            borderless = bool(self.input(5))
+            title = str(self.input(2))
+            width = int(self.input(3))
+            height = int(self.input(4))
+            fullscreen = bool(self.input(5))
+            borderless = bool(self.input(6))
         
             window.windowed_size = window.size = (width,height)
             window.title = title

@@ -23,21 +23,17 @@ from NIENV import *
 # self.log_message('that\'s not good', target='error')
 
 # --------------------------
-from ursina import *
 
-class %CLASS%(NodeInstance):
+
+class CreateVar_NodeInstance(NodeInstance):
     def __init__(self, params):
-        super(%CLASS%, self).__init__(params)
+        super(CreateVar_NodeInstance, self).__init__(params)
 
         # self.special_actions['action name'] = {'method': M(self.action_method)}
         # ...
 
     def update_event(self, input_called=-1):
-        if input_called == 0:
-            entity = Entity(model=self.input(1),color=self.input(2),position=self.input(3))
-            self.set_output_val(1, entity)
-            self.exec_output(0)
-        pass  # ...
+        self.get_vars_handler().create_new_var(self.input(1))
 
     def get_data(self):
         data = {}

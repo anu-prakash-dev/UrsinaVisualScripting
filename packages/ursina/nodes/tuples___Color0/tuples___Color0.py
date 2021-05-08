@@ -1,5 +1,5 @@
 from NIENV import *
-from ursina import *
+
 
 # API METHODS --------------
 
@@ -24,31 +24,23 @@ from ursina import *
 
 # --------------------------
 
-
-class SetWindowProperties_NodeInstance(NodeInstance):
+class Color_NodeInstance(NodeInstance):
     def __init__(self, params):
-        super(SetWindowProperties_NodeInstance, self).__init__(params)
+        super(Color_NodeInstance, self).__init__(params)
 
         # self.special_actions['action name'] = {'method': M(self.action_method)}
         # ...
 
     def update_event(self, input_called=-1):
-        if input_called == 0 :
-            app = self.input(1)
+
+        r = self.input(0)
+        g = self.input(1)
+        b = self.input(2)
+        a = self.input(3)
             
-            title = str(self.input(2))
-            width = int(self.input(3))
-            height = int(self.input(4))
-            fullscreen = bool(self.input(5))
-            borderless = bool(self.input(6))
-        
-            window.windowed_size = window.size = (width,height)
-            window.title = title
-            window.fullscreen = fullscreen
-            window.borderless = borderless
-        
-            self.set_output_val(1, app)
-            self.exec_output(0)
+        colour = (r,g,b,a)
+            
+        self.set_output_val(0, colour)
 
     def get_data(self):
         data = {}
