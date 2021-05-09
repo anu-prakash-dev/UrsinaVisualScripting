@@ -37,10 +37,15 @@ class RunUrsina_NodeInstance(NodeInstance):
         if input_called == 0:
             app = self.get_var_val("app")
             try:
-                    app.run()
+                app.run()
             except SystemExit:
-                    application.base.destroy()
-            
+                var_handler = self.get_vars_handler()
+                list_widget = var_handler.list_widget
+                var_index = var_handler.get_var_index_from_name("app")
+                var_widget = list_widget.widgets[var_index]
+                list_widget.del_variable(var_widget.var, var_widget)
+                application.base.destroy()
+                
         pass  # ...
 
     def get_data(self):

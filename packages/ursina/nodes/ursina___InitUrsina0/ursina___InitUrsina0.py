@@ -35,8 +35,10 @@ class InitUrsina_NodeInstance(NodeInstance):
 
     def update_event(self, input_called=-1):
         if input_called == 0:
-
+            scene.clear()
+            scene.reflection_map = "reflection_map_3"
             app = Ursina()
+            print("Working !!!")
             var_handler = self.get_vars_handler()
             var_handler.create_new_var("app")
             var_handler.set_var("app",app)

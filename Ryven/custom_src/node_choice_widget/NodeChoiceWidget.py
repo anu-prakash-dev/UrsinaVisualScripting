@@ -41,7 +41,6 @@ class NodeChoiceWidget(QWidget):
         self.layout().addWidget(self.search_line_edit)
 
         self.package_search = QCheckBox("Search In Package Name", self)
-        self.package_search.setChecked(True)
         self.package_search.stateChanged.connect(self.update_view)
         self.layout().addWidget(self.package_search)
 

@@ -87,7 +87,7 @@ class DesignContainer(QObject):
                   Qt.SolidLine,
                   QColor(0, 17, 25),
                   2,
-                  Qt.DashLine,
+                  Qt.SolidLine,
                   NIPainter_Ghostly),
         FlowTheme('blender',
                   QColor(0, 17, 25),
