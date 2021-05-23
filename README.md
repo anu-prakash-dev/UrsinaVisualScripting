@@ -52,37 +52,51 @@ Here are all the available nodes that were added to **Ryven**:
 
 1. **Init Ursina**: this node will initialize the Ursina engine
 
-   <img align="left" src="images/initnode.png">
+   ![init node](images/initnode.png)
+
+   &nbsp;
 
 2. **Set Window Properties**: this node adds the possibility to customize the window
 
-   <img align="left" src="images/winpropnode.png">
+   ![window properties node](images/winpropnode.png)
+
+   &nbsp;
 
 3. **Create Entity Instance**: this will create a new entity with the collected input values
 
-   <img align="left" src="images/entitynode.png">
+   ![entity node](images/entitynode.png)
+
+   &nbsp;
 
 4. **Color Picker**: this allows you to choose a color and get it's **R** value, **G** value and **B** value
 
-   <img align="left" src="images/colorpicknode.png">
+   ![color picker node](images/colorpicknode.png)
+   
+   &nbsp;
    
 5. **Color**: this node collects the RGBA values of the color picker and converts the values to **ursina.color.rgba**
 
-   <img align="left" src="images/colornode.png">
+   ![color node](images/colornode.png)
+   
+   &nbsp;
    
 6. **CheckBox**: returns boolean value
 
-   <img align="left" src="images/checkboxnode.png">
+   ![checkbox node](images/checkboxnode.png)
+
+   &nbsp;
 
 7. **On Key Down**: binds an event to a key in the keyboard
 
-   <img align="left" src="images/onkeydownnode.png">
+   ![OnKeyDown node](images/onkeydownnode.png)
+
+   &nbsp;
 
 8. **Tuple** Create tuple variables using this node
 
-   <img align="left" src="images/tuplenode.png">
+   ![Tuple node](images/tuplenode.png)
 
-
+&nbsp;
 
 ## WARNING!
 
