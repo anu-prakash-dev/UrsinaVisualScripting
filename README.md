@@ -1,106 +1,108 @@
-# URSINA - VISUAL SCRIPTING WITH RYVEN
+## NodeGraphQt
 
-&nbsp;
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE.md) 
+[![python 3.7+](https://img.shields.io/badge/python-3.7%2B-blue.svg)](https://www.python.org/downloads/)
+[![PEP8](https://img.shields.io/badge/code%20style-PEP8-green.svg)](https://www.python.org/dev/peps/pep-0008/) 
+[![stability-wip](https://img.shields.io/badge/stability-Work_In_Progress-lightgrey.svg)](https://github.com/orangemug/stability-badges/blob/master/README.md)
 
-Implementation of the **[Ursina game engine](https://www.ursinaengine.org/)** in the **[Ryven visual scripting framework](https://ryven.org/)**  for **[Python](https://python.org)**
+*(Note: this project is a work in progress and not production ready.)*
 
-![Visual scripting in Ursina](/images/ursinatest.png)
+---
 
-&nbsp;
+NodeGraphQt is a node graph framework that can be implemented and re purposed into 
+applications that supports PySide2.
 
-## REQUIREMENTS
+<img src="/docs/_images/screenshot.png" width="100%" title="NodeGraphQt">
 
-Before you run the software, make sure that you have these libraries installed
+#### API Documentation
 
-* **matplotlib v3.3.3**
-* **numpy v1.19.3**
-* **opencv-python v4.4.0.46**
-* **PySide2 v5.15.2**
-* **scipy v1.5.4**
-* **pyowm v3.1.1**
-* **ursina (latest)****
+https://jchanvfx.github.io/NodeGraphQt
 
-See **requirements.txt**.
+#### Navigation
 
-&nbsp;
+| action        | controls                                   |
+| ------------- |:------------------------------------------:|
+| Zoom in/out   | `Alt + MMB Drag` or `Mouse Scroll Up/Down` |
+| Pan           | `Alt + LMB Drag` or `MMB Drag`             |
+| Node search   | `Tab`                                      |
 
-## HOW TO RUN
+#### Slice Connections
 
-1. Clone the repository using: 
+<img src="/docs/_images/slicer.png" width="500" title="Pipe Slicer">
 
-   ````bash
-   git clone https://github.com/Someone-github/UrsinaVisualScripting
-   ````
+| action            | controls                 |
+| ----------------- |:------------------------:|
+| Slice Connections | `Shift + Alt + LMB Drag` |
 
-2. Navigate to UrsinaVisualScripting/Ryven using:
+#### Vertical Layout
+<img src="/docs/_images/vertical_layout.png" width="400" title="Vertical Layout">
 
-   ````bash
-   cd UrsinaVisualScripting/Ryven
-   ````
+#### Pipe Layout
 
-3. Run Ryven.py using:
+<img src="/docs/_images/pipe_layout_types.gif" width="600" title="Pipe Layout">
 
-   ````bash
-   python Ryven.py
-   ````
+#### Widgets
+<img src="/docs/_images/prop_bin.png" width="600" title="Properties Bin">
+<img src="/docs/_images/nodes_palette.png" width="350" title="Nodes Paletten">
+<img src="/docs/_images/nodes_tree.png" width="250" title="Nodes Tree">
 
-&nbsp;
+#### Example
 
-## GET STARTED
+```python
+import sys
 
-Here are all the available nodes that were added to **Ryven**:
+from NodeGraphQt import QtWidgets
+from NodeGraphQt import NodeGraph, BaseNode, BackdropNode, setup_context_menu
 
-1. **Init Ursina**: this node will initialize the Ursina engine
+# create a example node object with a input/output port.
+class MyNode(BaseNode):
+    """example test node."""
 
-   ![init node](images/initnode.png)
+    # unique node identifier domain. ("com.chantasticvfx.MyNode")
+    __identifier__ = 'com.chantasticvfx'
 
-   &nbsp;
+    # initial default node name.
+    NODE_NAME = 'My Node'
 
-2. **Set Window Properties**: this node adds the possibility to customize the window
+    def __init__(self):
+        super(MyNode, self).__init__()
+        self.add_input('foo', color=(180, 80, 0))
+        self.add_output('bar')
 
-   ![window properties node](images/winpropnode.png)
 
-   &nbsp;
+if __name__ == '__main__':
+    app = QtWidgets.QApplication(sys.argv)
 
-3. **Create Entity Instance**: this will create a new entity with the collected input values
-
-   ![entity node](images/entitynode.png)
-
-   &nbsp;
-
-4. **Color Picker**: this allows you to choose a color and get it's **R** value, **G** value and **B** value
-
-   ![color picker node](images/colorpicknode.png)
+    # create the node graph controller.
+    graph = NodeGraph()
+    
+    # set up default menu and commands.
+    setup_context_menu(graph)
    
-   &nbsp;
+    # register backdrop node. (included in the NodeGraphQt module)
+    graph.register_node(BackdropNode)
    
-5. **Color**: this node collects the RGBA values of the color picker and converts the values to **ursina.color.rgba**
-
-   ![color node](images/colornode.png)
+    # register example node into the node graph.
+    graph.register_node(MyNode)
    
-   &nbsp;
-   
-6. **CheckBox**: returns boolean value
+    # create nodes.
+    node_a = graph.create_node('com.chantasticvfx.MyNode', name='Node A')
+    node_b = graph.create_node('com.chantasticvfx.MyNode', name='Node B', color='#5b162f')
+    backdrop = graph.create_node('nodeGraphQt.nodes.Backdrop', name='Backdrop')
+    
+    # wrap "backdrop" node around "node_a" and "node_b"
+    backdrop.wrap_nodes([node_a, node_b])
 
-   ![checkbox node](images/checkboxnode.png)
+    # connect "node_a" input to "node_b" output.
+    node_a.set_input(0, node_b.output(0)) 
 
-   &nbsp;
+    # auto layout nodes.
+    graph.auto_layout_nodes()
 
-7. **On Key Down**: binds an event to a key in the keyboard
+    # show the node graph widget.
+    graph_widget = graph.widget
+    graph_widget.show()
 
-   ![OnKeyDown node](images/onkeydownnode.png)
-
-   &nbsp;
-
-8. **Tuple** Create tuple variables using this node
-
-   ![Tuple node](images/tuplenode.png)
-
-&nbsp;
-
-## WARNING!
-
-This project is still under development, but you can still test it by downloading the source and running it
-
-
+    app.exec_()
+```
 

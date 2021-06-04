@@ -1,7 +1,23 @@
-custom stuff (ignore)/
-ui_stuff/
-.idea/
-notizen.md
-__pycache__/
-venv/
-temp/
+# virtual enviroment
+env/*
+
+# sphinx documentation
+docs/_build/
+api
+
+# python stuff
+*.pyc
+*.idea
+
+# windows/osx stuff
+*.db
+*.DS_Store
+
+# test stuff
+dist
+build
+
+tests/*
+
+*.egg-info
+*.json
