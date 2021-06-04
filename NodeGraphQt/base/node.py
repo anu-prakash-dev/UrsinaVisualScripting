@@ -1137,17 +1137,29 @@ class BaseNode(NodeObject):
 
     def on_input_connected(self, in_port, out_port, events: list = []):
         """
-        Callback triggered when a new pipe connection is made.
+        Callback triggered when a pipe connection has been connected
+        to a INPUT port.
+
+        *The default of this function does nothing re-implement if you require
+        logic to run for this event.*
+
+        Note:
+            to work with undo & redo for this method re-implement
+            :meth:`BaseNode.on_output_connected` with the reverse logic.
+
+        Args:
+            in_port (NodeGraphQt.Port): source input port from this node.
+            out_port (NodeGraphQt.Port): output port that was connected.
         """
         
         if events == []:
-            pass
+            return
         else:
             for event in events:
                 try:
                     event()
                 except:
-                    return False
+                    return
 
     def on_input_disconnected(self, in_port, out_port, events: list = []):
         """
@@ -1167,13 +1179,13 @@ class BaseNode(NodeObject):
         """
         
         if events == []:
-            pass
+            return
         else:
             for event in events:
                 try:
                     event()
                 except:
-                    return False
+                    return
 
     def update_stream(self):
         """
@@ -1181,14 +1193,18 @@ class BaseNode(NodeObject):
         """
         update_node_down_stream(self)
 
-    def execute_event(self, event):
+    def run(self, events: list = []):
         """
         Node evaluation logic.
         """
-        try:
-            event()
-        except:
-            return False
+        if events == []:
+            return
+        else:
+            for event in events:
+                try:
+                    event()
+                except:
+                    return
 
     def set_editable(self, state):
         """
