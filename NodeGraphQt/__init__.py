@@ -93,6 +93,9 @@ from .widgets.properties_bin import PropertiesBinWidget
 from .widgets.node_publish_widget import NodePublishWidget
 from .widgets.node_widgets import NodeBaseWidget
 
+# QtCore
+from Qt import QtCore
+
 
 __version__ = VERSION
 __all__ = [
