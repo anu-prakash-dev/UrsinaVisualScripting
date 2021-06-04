@@ -1135,24 +1135,21 @@ class BaseNode(NodeObject):
             nodes[p] = [cp.node() for cp in p.connected_ports()]
         return nodes
 
-    def on_input_connected(self, in_port, out_port):
+    def on_input_connected(self, in_port, out_port, events: list = []):
         """
         Callback triggered when a new pipe connection is made.
-
-        *The default of this function does nothing re-implement if you require
-        logic to run for this event.*
-
-        Note:
-            to work with undo & redo for this method re-implement
-            :meth:`BaseNode.on_input_disconnected` with the reverse logic.
-
-        Args:
-            in_port (NodeGraphQt.Port): source input port from this node.
-            out_port (NodeGraphQt.Port): output port that connected to this node.
         """
-        return
+        
+        if events == []:
+            pass
+        else:
+            for event in events:
+                try:
+                    event()
+                except:
+                    return False
 
-    def on_input_disconnected(self, in_port, out_port):
+    def on_input_disconnected(self, in_port, out_port, events: list = []):
         """
         Callback triggered when a pipe connection has been disconnected
         from a INPUT port.
@@ -1168,7 +1165,15 @@ class BaseNode(NodeObject):
             in_port (NodeGraphQt.Port): source input port from this node.
             out_port (NodeGraphQt.Port): output port that was disconnected.
         """
-        return
+        
+        if events == []:
+            pass
+        else:
+            for event in events:
+                try:
+                    event()
+                except:
+                    return False
 
     def update_stream(self):
         """
@@ -1176,11 +1181,14 @@ class BaseNode(NodeObject):
         """
         update_node_down_stream(self)
 
-    def run(self):
+    def execute_event(self, event):
         """
         Node evaluation logic.
         """
-        return
+        try:
+            event()
+        except:
+            return False
 
     def set_editable(self, state):
         """
