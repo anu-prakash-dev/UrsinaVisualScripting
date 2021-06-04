@@ -135,10 +135,7 @@ class NodeGraph(QtCore.QObject):
         """
         Connect up all the signals and slots here.
         """
-        # hard coded tab search.
-        tab = QtWidgets.QShortcut(
-            QtGui.QKeySequence(QtCore.Qt.Key_Tab), self._viewer)
-        tab.activated.connect(self._toggle_tab_search)
+        
         self._viewer.need_show_tab_search.connect(self._toggle_tab_search)
 
         # internal signals.

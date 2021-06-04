@@ -101,15 +101,11 @@ class NodeViewer(QtWidgets.QGraphicsView):
 
         # workaround fix for shortcuts from the non-native menu actions
         # don't seem to trigger so we create a hidden menu bar.
-        menu_bar = QtWidgets.QMenuBar(self)
-        menu_bar.setNativeMenuBar(False)
         # shortcuts don't work with "setVisibility(False)".
-        menu_bar.setMaximumSize(0, 0)
 
-        self._ctx_menu = BaseMenu('NodeGraph', self)
+        self._ctx_menu = QtWidgets.QMenuBar(self)
         self._ctx_node_menu = BaseMenu('Nodes', self)
-        menu_bar.addMenu(self._ctx_menu)
-        menu_bar.addMenu(self._ctx_node_menu)
+
 
         # note: context node menu will be enabled when a action
         #       is added through the "NodesMenu" interface.
@@ -236,48 +232,26 @@ class NodeViewer(QtWidgets.QGraphicsView):
         self._last_size = self.size()
         super(NodeViewer, self).resizeEvent(event)
 
-    def contextMenuEvent(self, event):
-        self.RMB_state = False
-        ctx_menu = None
-
-        if self._ctx_node_menu.isEnabled():
-            pos = self.mapToScene(self._previous_pos)
-            items = self._items_near(pos)
-            nodes = [i for i in items if isinstance(i, AbstractNodeItem)]
-            if nodes:
-                node = nodes[0]
-                ctx_menu = self._ctx_node_menu.get_menu(node.type_, node.id)
-                if ctx_menu:
-                    for action in ctx_menu.actions():
-                        if not action.menu():
-                            action.node_id = node.id
-
-        ctx_menu = ctx_menu or self._ctx_menu
-        if len(ctx_menu.actions()) > 0:
-            if ctx_menu.isEnabled():
-                ctx_menu.exec_(event.globalPos())
-            else:
-                return super(NodeViewer, self).contextMenuEvent(event)
-        else:
-            self.show_tab_search.emit()
-        return super(NodeViewer, self).contextMenuEvent(event)
 
     def mousePressEvent(self, event):
+
         if event.button() == QtCore.Qt.LeftButton:
             self.LMB_state = True
         elif event.button() == QtCore.Qt.RightButton:
             self.RMB_state = True
+            if not self._search_widget.isVisible():
+                self.need_show_tab_search.emit()
+            else:
+                self._search_widget.hide()
+
         elif event.button() == QtCore.Qt.MiddleButton:
             self.MMB_state = True
 
-        self._origin_pos = event.pos()
-        self._previous_pos = event.pos()
         (self._prev_selection_nodes,
          self._prev_selection_pipes) = self.selected_items()
 
-        # close tab search
-        if self._search_widget.isVisible():
-            self.tab_search_toggle()
+        self._origin_pos = event.pos()
+        self._previous_pos = event.pos()
 
         # cursor pos.
         map_pos = self.mapToScene(event.pos())
